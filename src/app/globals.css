@@ -1,0 +1,293 @@
+@import "tailwindcss";
+
+/* ═══ ÇOCUK TRİBÜNÜ — TASARIM SİSTEMİ (renkler tasarım dosyasından birebir) ═══ */
+
+:root, [data-theme="light"] {
+  /* ═══════════════════════════════════════════════════════════════
+     WISE TASARIM DİLİ
+
+     Üç renk taşıyor: orman yeşili (koyu), parlak yeşil (vurgu) ve
+     kırık beyaz (zemin). Geri kalanı nötr gri.
+
+     ┌─ PARLAK YEŞİL AZ KULLANILIR ⚠️ ────────────────────────────┐
+     │ #9FE870 yalnızca BİRİNCİL EYLEMDE: sayfadaki tek "asıl"     │
+     │ düğme, bir de nadir vurgu şeridi. Her yere serpilirse       │
+     │ vurgu olmaktan çıkıp gürültüye dönüşür — eski sarı öyle     │
+     │ olmuştu.                                                     │
+     │                                                              │
+     │ İkincil eylemler orman yeşili (--solid) ya da çerçeveli.    │
+     └──────────────────────────────────────────────────────────────┘
+     ═══════════════════════════════════════════════════════════════ */
+
+  /* Zeminler — kırık beyaz, Wise'ın açık gri katmanı */
+  --bg:#f7f7f7; --page:#ffffff; --surface:#f7f7f7;
+
+  /* ┌─ YAZI SİYAH, YEŞİL DEĞİL ⚠️ ──────────────────────────────┐
+     │ Yazı rengi orman yeşiliydi (#163300). Sayfada üç yeşil ton  │
+     │ yan yana gelince (parlak yeşil vurgu, marka yeşili, yazı    │
+     │ yeşili) hangisinin vurgu olduğu kayboluyordu — ve metin      │
+     │ farkında olmadan renkli okunuyordu.                          │
+     │                                                                │
+     │ Yazı artık siyah, ara tonlar nötr gri. Parlak yeşil tek      │
+     │ başına vurgu taşıyor.                                         │
+     └────────────────────────────────────────────────────────────────┘ */
+  --ink:#000000; --ink2:#3d3d3d; --muted:#6b6b6b; --muted2:#909090;
+
+  --line:#e6e6e6; --line2:#f0f0f0; --field:#f7f7f7; --chip:#efefef;
+
+  /* Marka yeşili — onay ve olumlu durum */
+  --green:#2f7a1a; --green-soft:#edf9e5; --on-green:#ffffff;
+
+  /* Koyu bölümler */
+  /* ┌─ KOYU BÖLÜMLER SİYAH ⚠️ ──────────────────────────────────┐
+     │ Footer ve koyu şeritler orman yeşiliydi. Sayfada üç yeşil   │
+     │ ton yan yana gelince (parlak yeşil, marka yeşili, koyu      │
+     │ yeşil) hangisinin vurgu olduğu kayboluyordu.                 │
+     │                                                               │
+     │ Siyah zemin parlak yeşili öne çıkarıyor ve koyu temayla da   │
+     │ tutarlı oluyor.                                               │
+     └───────────────────────────────────────────────────────────────┘ */
+  --deep:#0a0a0a; --deep-ink:#f5f5f5; --deep-muted:#9a9a9a; --on-dark:#d4d4d4;
+
+  --orange:#ff7d45; --orange-soft:#fff1e9; --orange-ink:#c2521f;
+  --orange-line:#ffd4bd; --orange-bg:#fff8f4;
+
+  /* ★ Parlak yeşil — birincil eylem rengi */
+  --lime:#9fe870; --on-lime:#0a0a0a;
+  --accent:#9fe870; --accent-ink:#0a0a0a; --accent-soft:#eefae4; --accent-line:#8ad95c;
+
+  /* Nötr koyu düğme */
+  --solid:#0a0a0a; --on-solid:#ffffff; --sidebar:#0a0a0a;
+
+  --danger:#a8200d; --danger-soft:#fdecea;
+
+  /* Gölgeler yumuşak ve geniş — Wise kart kenarlığı yerine gölgeye
+     ve ton farkına güveniyor */
+  --shadow:0 32px 72px -44px rgba(0,0,0,.28);
+  --shadow-sm:0 1px 3px rgba(0,0,0,.07);
+  --shadow-md:0 12px 32px -16px rgba(0,0,0,.18);
+}
+
+[data-theme="dark"] {
+  /* ┌─ KOYU TEMA SİMSİYAH ──────────────────────────────────────┐
+     │ Önce koyu yeşil tonlar kullanılmıştı; ekran yeşilimsi      │
+     │ görünüyordu. Artık saf siyah taban ve nötr gri katmanlar.  │
+     │                                                             │
+     │ Parlak yeşil (#9FE870) DEĞİŞMİYOR: marka rengi temaya göre │
+     │ kaymamalı ve siyah üstünde zaten çok iyi okunuyor.          │
+     └─────────────────────────────────────────────────────────────┘ */
+  --bg:#000000; --page:#000000; --surface:#0e0e0e;
+  --ink:#f5f5f5; --ink2:#c4c4c4; --muted:#8f8f8f; --muted2:#6e6e6e;
+  --line:#242424; --line2:#1a1a1a; --field:#111111; --chip:#1a1a1a;
+  --green:#9fe870; --green-soft:rgba(159,232,112,.13); --on-green:#0a0a0a;
+  --deep:#000000; --deep-ink:#f5f5f5; --deep-muted:#9a9a9a; --on-dark:#d4d4d4;
+  --orange:#ff9152; --orange-soft:rgba(255,145,82,.14); --orange-ink:#ffb184;
+  --orange-line:rgba(255,145,82,.3); --orange-bg:rgba(255,145,82,.07);
+  --lime:#9fe870; --on-lime:#0a0a0a;
+  --accent:#9fe870; --accent-ink:#0a0a0a;
+  --accent-soft:rgba(159,232,112,.13); --accent-line:rgba(159,232,112,.35);
+  /* Koyu temada birincil düğme parlak yeşil: beyaz düğme fazla sert */
+  --solid:#9fe870; --on-solid:#0a0a0a; --sidebar:#000000;
+  --danger:#ff7a6a; --danger-soft:rgba(255,122,106,.13);
+  --shadow:0 32px 72px -44px rgba(0,0,0,.9);
+  --shadow-sm:0 1px 3px rgba(0,0,0,.6);
+  --shadow-md:0 12px 32px -16px rgba(0,0,0,.7);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   WISE — BAŞLIK FONTU
+
+   ┌─ TEK DOSYA, TEK @font-face ⚠️ ────────────────────────────────┐
+   │ Elimizde yalnızca `wise.ttf` var: ayrı kalın/yarı kalın       │
+   │ kesimleri yok.                                                  │
+   │                                                                 │
+   │ Bu yüzden `font-weight: 100 900` yazıyoruz — tarayıcı bu tek   │
+   │ dosyayı HER kalınlık için kullanır ve gerekeni kendisi         │
+   │ sentezler. İki ayrı @font-face tanımlasaydık (600 ve 700)      │
+   │ ikisi de aynı dosyayı gösterirdi; tarayıcı "bu ağırlık zaten   │
+   │ var" deyip sentezleme yapmaz ve BAŞLIKLAR İNCE KALIRDI.        │
+   └─────────────────────────────────────────────────────────────────┘
+
+   Dosya `public/fonts/wise.ttf` içine konur. Yoksa site bozulmaz:
+   `font-display: swap` ve yedek liste devreye girer.
+
+   ttf woff2'den büyük; elinize woff2 geçerse `src` satırına ekleyin,
+   tarayıcı otomatik onu tercih eder.
+   ═══════════════════════════════════════════════════════════════════ */
+@font-face{
+  font-family:"Wise";
+  src:url("/fonts/wise.ttf") format("truetype");
+  font-weight:100 900;
+  font-style:normal;
+  font-display:swap;
+}
+
+@theme inline {
+  --color-bg:var(--bg); --color-page:var(--page); --color-surface:var(--surface);
+  --color-ink:var(--ink); --color-ink2:var(--ink2); --color-muted:var(--muted); --color-muted2:var(--muted2);
+  --color-line:var(--line); --color-line2:var(--line2); --color-field:var(--field); --color-chip:var(--chip);
+  --color-green:var(--green); --color-green-soft:var(--green-soft); --color-on-green:var(--on-green);
+  --color-deep:var(--deep); --color-deep-ink:var(--deep-ink); --color-deep-muted:var(--deep-muted); --color-on-dark:var(--on-dark);
+  --color-orange:var(--orange); --color-orange-soft:var(--orange-soft); --color-orange-ink:var(--orange-ink);
+  --color-orange-line:var(--orange-line); --color-orange-bg:var(--orange-bg);
+  --color-lime:var(--lime); --color-on-lime:var(--on-lime);
+  --color-accent:var(--accent); --color-accent-ink:var(--accent-ink);
+  --color-accent-soft:var(--accent-soft); --color-accent-line:var(--accent-line);
+  --color-solid:var(--solid); --color-on-solid:var(--on-solid); --color-sidebar:var(--sidebar);
+  --color-danger:var(--danger); --color-danger-soft:var(--danger-soft);
+  --font-display:"Wise", var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans:var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --radius-card:26px; --radius-panel:20px; --radius-field:12px;
+}
+
+* { box-sizing:border-box; }
+html {
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+  /* Sayfa geçişlerinde beyaz flaş olmaması için kök öğe de boyanır */
+  background:var(--page);
+  color-scheme:light;
+}
+html[data-theme="dark"] { color-scheme:dark; }
+body {
+  margin:0; min-height:100dvh; background:var(--page); color:var(--ink);
+  /* ┌─ FONT NEDEN UYGULANMIYORDU ⚠️ ────────────────────────────┐
+     │ `body` doğrudan `--font-manrope` yazıyordu. Manrope kaldırılıp│
+     │ Inter'e geçilince o değişken tanımsız kaldı ve tarayıcı      │
+     │ listedeki bir sonrakine, yani `system-ui`ye düştü.            │
+     │                                                                │
+     │ Artık `--font-sans` üzerinden: tek yerden yönetiliyor, font   │
+     │ değişince body de kendiliğinden takip ediyor.                  │
+     └────────────────────────────────────────────────────────────────┘ */
+  font-family:var(--font-sans);
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+::selection { background:var(--lime); color:var(--on-lime); }
+:focus-visible { outline:2px solid var(--accent-line); outline-offset:2px; border-radius:6px; }
+
+/* ── ANİMASYONLAR: sade, hızlı, GPU dostu ── */
+@keyframes ct-rise { from{opacity:0;transform:translate3d(0,14px,0)} to{opacity:1;transform:none} }
+@keyframes ct-fade { from{opacity:0} to{opacity:1} }
+@keyframes ct-scale { from{opacity:0;transform:scale(.97)} to{opacity:1;transform:scale(1)} }
+@keyframes ct-slide-down { from{opacity:0;transform:translate3d(0,-8px,0)} to{opacity:1;transform:none} }
+@keyframes ct-spin { to{transform:rotate(360deg)} }
+@keyframes ct-modal-in {
+  from { opacity:0; transform:translate3d(0,18px,0) scale(.985) }
+  to   { opacity:1; transform:none }
+}
+@keyframes ct-caret { 0%,49%{opacity:1} 50%,100%{opacity:0} }
+@keyframes ct-shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+
+.ct-rise{animation:ct-rise .42s cubic-bezier(.22,1,.36,1) both}
+.ct-fade{animation:ct-fade .3s ease both}
+.ct-scale{animation:ct-scale .28s cubic-bezier(.22,1,.36,1) both}
+.ct-slide-down{animation:ct-slide-down .22s cubic-bezier(.22,1,.36,1) both}
+.ct-spin{animation:ct-spin .7s linear infinite}
+
+.ct-stagger > *{animation:ct-rise .42s cubic-bezier(.22,1,.36,1) both}
+.ct-stagger > *:nth-child(1){animation-delay:.02s}
+.ct-stagger > *:nth-child(2){animation-delay:.06s}
+.ct-stagger > *:nth-child(3){animation-delay:.1s}
+.ct-stagger > *:nth-child(4){animation-delay:.14s}
+.ct-stagger > *:nth-child(5){animation-delay:.18s}
+.ct-stagger > *:nth-child(6){animation-delay:.22s}
+.ct-stagger > *:nth-child(7){animation-delay:.26s}
+.ct-stagger > *:nth-child(8){animation-delay:.3s}
+.ct-stagger > *:nth-child(n+9){animation-delay:.34s}
+
+.ct-reveal{
+  opacity:0; transform:translate3d(0,18px,0);
+  transition:opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1);
+  will-change:opacity,transform;
+}
+.ct-reveal[data-visible="true"]{opacity:1;transform:none}
+
+.ct-skeleton{
+  background:linear-gradient(90deg,var(--chip) 25%,var(--line2) 37%,var(--chip) 63%);
+  background-size:400% 100%; animation:ct-shimmer 1.3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important; animation-iteration-count:1 !important;
+    transition-duration:.01ms !important; scroll-behavior:auto !important;
+  }
+  .ct-reveal{opacity:1;transform:none}
+}
+
+.ct-eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2)}
+.ct-scrollbar::-webkit-scrollbar{width:10px;height:10px}
+.ct-scrollbar::-webkit-scrollbar-track{background:transparent}
+.ct-scrollbar::-webkit-scrollbar-thumb{background:var(--line);border-radius:999px;border:3px solid var(--page)}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{appearance:none;margin:0}
+
+/* Tema duyarlı logo — site tarafıyla aynı kurallar */
+.ct-logo-light { display: block; }
+.ct-logo-dark  { display: none; }
+
+[data-theme="dark"] .ct-logo-light { display: none; }
+[data-theme="dark"] .ct-logo-dark  { display: block; }
+
+/* ── Üstten inen bildirim ──
+   Giriş: yukarıdan aşağı kayarak belirir.
+   Çıkış: yukarı doğru kayarak kaybolur.
+   `prefers-reduced-motion` açıksa hareket yerine yalnızca solma. */
+@keyframes ct-toast-in{
+  from{ opacity:0; transform:translate3d(0,-14px,0) scale(.97); }
+  to  { opacity:1; transform:translate3d(0,0,0) scale(1); }
+}
+@keyframes ct-toast-out{
+  from{ opacity:1; transform:translate3d(0,0,0) scale(1); }
+  to  { opacity:0; transform:translate3d(0,-14px,0) scale(.97); }
+}
+.ct-toast-in { animation:ct-toast-in .22s cubic-bezier(.22,1,.36,1) both; }
+.ct-toast-out{ animation:ct-toast-out .2s ease-in both; }
+
+@media (prefers-reduced-motion: reduce){
+  .ct-toast-in, .ct-toast-out{ animation-duration:.01ms; transform:none; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   WISE TİPOGRAFİ ÖLÇEĞİ
+
+   Wise'ın başlıkları üç şeyle tanınıyor:
+     1. ÇOK büyük — h1 masaüstünde 64-80px
+     2. SIKI satır aralığı — 0.95-1.05 arası, harfler birbirine yakın
+     3. NEGATİF harf aralığı — büyüdükçe artan sıkılık
+
+   Küçük puntoda negatif aralık okunurluğu bozar; bu yüzden ölçek
+   büyüdükçe sıkılaşıyor, küçüldükçe normale dönüyor.
+   ═══════════════════════════════════════════════════════════════════ */
+.ct-h1{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:clamp(38px, 7vw, 76px);
+  line-height:.98;
+  letter-spacing:-.04em;
+}
+.ct-h2{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:clamp(30px, 5vw, 54px);
+  line-height:1.04;
+  letter-spacing:-.035em;
+}
+.ct-h3{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:clamp(21px, 2.6vw, 30px);
+  line-height:1.16;
+  letter-spacing:-.025em;
+}
+/* Giriş paragrafı — başlığın hemen altındaki büyük açıklama */
+.ct-lead{
+  font-size:clamp(16px, 1.7vw, 20px);
+  line-height:1.55;
+  color:var(--ink2);
+}
+
+/* ── Wise düğme dili ──
+   Kenarlık yok, dolgu ve yükseklik taşıyor. Tam yuvarlak uçlar. */
+.ct-btn-lift{ transition:transform .15s var(--ease-ct), box-shadow .15s var(--ease-ct); }
+.ct-btn-lift:active{ transform:scale(.975); }

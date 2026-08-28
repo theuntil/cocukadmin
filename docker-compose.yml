@@ -1,0 +1,105 @@
+# Çocuk Tribünü — Yönetim Paneli (ct-admin)
+#
+# ═══════════════════════════════════════════════════════════════════════
+#  DOKPLOY KURULUMU
+#
+#  Uygulama tipi: "Compose" seçin (Application değil).
+#
+#  1. Dokploy > Create > Compose
+#  2. Provider: GitHub, deponuzu ve dalı seçin
+#  3. Compose Path: ./docker-compose.yml
+#
+#     ⚠️  "Compose file not found" HATASI ALIYORSANIZ
+#     Bu dosya deponun KÖKÜNDE olmalı. Paketi açıp klasörün tamamını
+#     (cocuk-tribunu-admin/) push ettiyseniz dosya bir alt dizinde
+#     kalır. İki çözüm:
+#       a) Klasörün İÇİNDEKİLERİ depo köküne taşıyın, ya da
+#       b) Compose Path'i ./cocuk-tribunu-admin/docker-compose.yml yapın
+#  4. Environment sekmesine .env.example içindeki değerleri girin
+#  5. Domain: yonetim.cocuktribunu.org → port 3000
+#  6. Deploy
+#
+#  GÜVENLİK: Panel tamamen kapalıdır — giriş sayfası dışında her yol
+#  oturum ister, ayrıca personel rolü olmayan hesap giriş yapamaz.
+#  Yine de mümkünse Dokploy/Traefik üzerinden IP kısıtı eklemenizi öneririm.
+# ═══════════════════════════════════════════════════════════════════════
+
+name: ct-admin
+
+services:
+  admin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # ┌─ DERLEME ANI DEĞİŞKENLERİ ⚠️ ────────────────────────────┐
+      # │ Yalnızca `NEXT_PUBLIC_*` olanlar buraya konur: bu değerler │
+      # │ tarayıcıya giden JS'in İÇİNE gömülüyor ve derleme anında   │
+      # │ belli olmaları gerekiyor.                                   │
+      # │                                                              │
+      # │ Gizli anahtarlar (R2 parolası, servis anahtarı) buraya      │
+      # │ KONMAZ — derleme katmanlarında iz bırakır. Onlar aşağıdaki │
+      # │ `environment` bölümünde, çalışma anında veriliyor.          │
+      # └──────────────────────────────────────────────────────────────┘
+      args:
+        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
+        NEXT_PUBLIC_TEAM_URL: ${NEXT_PUBLIC_TEAM_URL}
+        NEXT_PUBLIC_R2_PUBLIC_URL: ${NEXT_PUBLIC_R2_PUBLIC_URL}
+        NEXT_PUBLIC_STORAGE_READ_FROM: ${NEXT_PUBLIC_STORAGE_READ_FROM}
+
+    restart: unless-stopped
+
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+
+      NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
+
+      # Cloudflare R2
+      NEXT_PUBLIC_R2_PUBLIC_URL: ${NEXT_PUBLIC_R2_PUBLIC_URL}
+      NEXT_PUBLIC_STORAGE_READ_FROM: ${NEXT_PUBLIC_STORAGE_READ_FROM}
+      R2_ACCOUNT_ID: ${R2_ACCOUNT_ID}
+      R2_ACCESS_KEY_ID: ${R2_ACCESS_KEY_ID}
+      R2_SECRET_ACCESS_KEY: ${R2_SECRET_ACCESS_KEY}
+      R2_BUCKET: ${R2_BUCKET}
+      R2_BUCKET_PRIVATE: ${R2_BUCKET_PRIVATE}
+      STORAGE_DUAL_WRITE: ${STORAGE_DUAL_WRITE}
+      STORAGE_READ_FROM: ${STORAGE_READ_FROM}
+      NEXT_PUBLIC_TEAM_URL: ${NEXT_PUBLIC_TEAM_URL}
+
+      # Bildirim servisi — aynı Docker ağındaysa iç adres
+      NOTIFY_SERVICE_URL: ${NOTIFY_SERVICE_URL}
+      NOTIFY_SERVICE_SECRET: ${NOTIFY_SERVICE_SECRET}
+
+    expose:
+      - 3000
+
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/giris').then(r=>{if(r.status>=500)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+    # Supabase ve ct-notify ile aynı ağ
+    networks:
+      - supabase
+
+networks:
+  supabase:
+    external: true
+    name: ocuk-tribn-supabase-p7owij

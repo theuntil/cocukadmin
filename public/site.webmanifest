@@ -1,0 +1,10 @@
+{
+  "name": "Çocuk Tribünü Yönetim",
+  "short_name": "CT Yönetim",
+  "icons": [
+    { "src": "/favicon.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#0f2a22",
+  "background_color": "#efeae1",
+  "display": "standalone"
+}
